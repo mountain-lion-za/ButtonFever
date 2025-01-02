@@ -47,6 +47,12 @@ BfButtonManager& BfButtonManager::setADCResolution(uint16_t resolution) {
   this->_adcResolution = resolution;
   return *this;
 }
+
+BfButtonManager& BfButtonManager::setADCBounds(uint16_t lowerBound, uint16_t upperBound) {
+  this->_adcLowerBound = lowerBound;
+  this->_adcResolution = upperBound;
+  return *this;
+}
     
 BfButtonManager& BfButtonManager::addButton(BfButton* btn, uint16_t minVoltageReading, uint16_t maxVoltageReading) {
   uint8_t _b = btn->getID();
@@ -102,9 +108,9 @@ int8_t BfButtonManager::_readButton() {
   }
   z = _sum / 4;
   
-  if (z >= 100 || z < this->_adcResolution) {
+  if (z >= this->_adcLowerBound || z < this->_adcResolution) {
     for (int8_t _b = 0; _b < this->_buttonCount; _b++) {
-      if (z > this->_btnVoltageLowerBounds[_b] && z < this->_btnVoltageUpperBounds[_b]) {
+      if (z >= this->_btnVoltageLowerBounds[_b] && z <= this->_btnVoltageUpperBounds[_b]) {
         _button = _b;
         break;
       }
