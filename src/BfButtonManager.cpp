@@ -108,7 +108,7 @@ int8_t BfButtonManager::_readButton() {
   }
   z = _sum / 4;
   
-  if (z >= this->_adcLowerBound || z < this->_adcResolution) {
+  if (z >= this->_adcLowerBound || z <= this->_adcResolution) {
     for (int8_t _b = 0; _b < this->_buttonCount; _b++) {
       if (z >= this->_btnVoltageLowerBounds[_b] && z <= this->_btnVoltageUpperBounds[_b]) {
         _button = _b;
