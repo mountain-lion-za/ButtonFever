@@ -46,6 +46,12 @@ class BfButtonManager {
      * The library will set build-in ADC for Arduino and ESP32 by default.
      */
     BfButtonManager& setADCResolution(uint16_t resolution);
+
+    /*
+     * Set the lower & upper bounds for the acceptable voltage range for ADC buttons (upperBound = resolution)
+     * defaults: lowerBound = 50, upperBound = 1024 (4096 for ESP32)
+     */
+    BfButtonManager& setADCBounds(uint16_t lowerBound, uint16_t upperBound);
     
     /*
      * Add button to button array.
@@ -88,6 +94,8 @@ class BfButtonManager {
     #else
     uint16_t _adcResolution = 1024;
     #endif
+
+    uint16_t _adcLowerBound = 100;
     
     unsigned long _lastLoop = 0;
     uint8_t _loopInterval = 20;
